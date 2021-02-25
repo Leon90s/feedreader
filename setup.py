@@ -6,7 +6,7 @@ import feedreader
 
 setup(
     name='feedreader',
-    version='0.3.1',
+    version='0.1.0',
     author='David Cramer',
     author_email='dcramer@gmail.com',
     url='https://github.com/dcramer/feedreader',

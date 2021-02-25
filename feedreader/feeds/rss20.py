@@ -22,7 +22,7 @@ class RSS20Item(Item):
     
     @property
     def description(self):
-        return unicode(self._xml.description).strip()
+        return str(self._xml.description).strip()
     
     def _process_links(self):
         # <media:thumbnail url="http://th04.deviantart.net/fs48/300W/f/2009/207/d/7/d7400f45d945d29fa1edba98531bc887.jpg" height="399" width="300"/>

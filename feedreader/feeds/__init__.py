@@ -8,7 +8,7 @@ class BetterObject(object):
 
 class Tag(BetterObject, Proxy):
     def __unicode__(self):
-        return unicode(self.__instance__).strip()
+        return str(self.__instance__).strip()
 
 class Author(BetterObject):
     def __init__(self, name=None, email=None, link=None):
@@ -25,7 +25,7 @@ class Enclosure(BetterObject):
     media = None
     
     def __init__(self, href, type=None):
-        self.type, self.href = type and unicode(type) or None, unicode(href)
+        self.type, self.href = type and str(type) or None, str(href)
     
     def __str__(self):
         if self.type:

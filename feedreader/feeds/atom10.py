@@ -51,7 +51,7 @@ class Atom10Item(Item):
     
     @property
     def description(self):
-        return unicode(self._xml.content).strip()
+        return str(self._xml.content).strip()
     
     @property
     def published(self):

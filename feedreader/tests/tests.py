@@ -21,7 +21,7 @@ RSS_FILES = (
                 'link': 'http://www.reddit.com/r/reddit.com/comments/86297/do_no_evil_my_ass_google_is_now_supporting_domain/',
             },
             {
-                'title': u'The Best 10 \u201cThe Best \u2026 of 2008\u2033 of 2008',
+                'title': 'The Best 10 \u201cThe Best \u2026 of 2008\u2033 of 2008',
                 'link': 'http://www.reddit.com/r/pics/comments/7m2sa/the_best_10_the_best_of_2008_of_2008/',
             }
         )
@@ -82,24 +82,24 @@ class RSSTestCase(unittest2.TestCase):
             fp = open(os.path.join(DIR, fname), 'r')
             parsed = from_file(fp)
 
-            self.assertEquals(parsed.tag, 'channel')
-            self.assertEquals(parsed.feed, 'RSS 2.0')
-            self.assertEquals(parsed.title, test_data['title'])
-            self.assertEquals(parsed.link, test_data['link'])
-            self.assertEquals(parsed.description, test_data['description'])
+            self.assertEqual(parsed.tag, 'channel')
+            self.assertEqual(parsed.feed, 'RSS 2.0')
+            self.assertEqual(parsed.title, test_data['title'])
+            self.assertEqual(parsed.link, test_data['link'])
+            self.assertEqual(parsed.description, test_data['description'])
             # Test the first one:
-            for entry, test_req in itertools.izip(parsed.entries[:len(test_data['entries'])], test_data['entries']):
-                self.assertEquals(entry.tag, 'item')
-                self.assertEquals(entry.guid, entry.id)
+            for entry, test_req in zip(parsed.entries[:len(test_data['entries'])], test_data['entries']):
+                self.assertEqual(entry.tag, 'item')
+                self.assertEqual(entry.guid, entry.id)
                 for field in ('author', 'title', 'link', 'description', 'id'):
                     if field in test_req:
-                        self.assertEquals(unicode(getattr(entry, field)), test_req[field])
+                        self.assertEqual(str(getattr(entry, field)), test_req[field])
                 enclosures = test_req.get('enclosures', [])
                 # THere is a bug with entry.enclosures not working if you slice it first
-                for enclosure, test_req in itertools.izip(entry.enclosures[:len(enclosures)], enclosures):
+                for enclosure, test_req in zip(entry.enclosures[:len(enclosures)], enclosures):
                     for field in ('href', 'type'):
                         if field in test_req:
-                            self.assertEquals(unicode(getattr(enclosure, field)), test_req[field])
+                            self.assertEqual(str(getattr(enclosure, field)), test_req[field])
 
 if __name__ == '__main__':
     unittest2.main()

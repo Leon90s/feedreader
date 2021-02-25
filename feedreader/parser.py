@@ -1,15 +1,15 @@
 import lxml.objectify
-import httplib
-import urlparse
+import http.client
+import urllib.parse
 
-from utils.dates import *
-from feeds import InvalidFeed
+from .utils.dates import *
+from .feeds import InvalidFeed
 
 __all__ = ('ParseError', 'InvalidFeed', 'from_string', 'from_url', 'from_file', 'parse_date')
 
 # TODO: change the feeds to a registration model
-from feeds.atom10 import Atom10Feed
-from feeds.rss20 import RSS20Feed
+from .feeds.atom10 import Atom10Feed
+from .feeds.rss20 import RSS20Feed
 
 feeds = (RSS20Feed, Atom10Feed)
 
@@ -38,11 +38,11 @@ def from_file(fp, *args, **kwargs):
     return _from_parsed(parsed)
 
 def from_url(url, **kwargs):
-    url = urlparse.urlparse(url)
+    url = urllib.parse.urlparse(url)
     if url.scheme == 'https':
-        conn = httplib.HTTPSConnection
+        conn = http.client.HTTPSConnection
     elif url.scheme == 'http':
-        conn = httplib.HTTPConnection
+        conn = http.client.HTTPConnection
     else:
         raise NotImplementedError
     
@@ -63,7 +63,7 @@ def from_url(url, **kwargs):
     connection.request(method, path, query, headers)
     try:
         response = connection.getresponse()
-    except httplib.BadStatusLine, exc:
+    except http.client.BadStatusLine as exc:
         raise ParseError('Bad status line: %s' % (exc,))
     
     if response.status != 200:

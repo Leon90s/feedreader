@@ -27,7 +27,7 @@ class Proxy(object):
             return '<%s unbound>' % self.__class__.__name__
         return repr(obj)
 
-    def __nonzero__(self):
+    def __bool__(self):
         try:
             return bool(self._current_object)
         except RuntimeError:
@@ -35,7 +35,7 @@ class Proxy(object):
 
     def __unicode__(self):
         try:
-            return unicode(self.__current_oject)
+            return str(self.__current_oject)
         except RuntimeError:
             return repr(self)
 
@@ -62,7 +62,7 @@ class Proxy(object):
 
     __delattr__ = lambda x, n: delattr(x._current_object, n)
     __str__ = lambda x: str(x._current_object)
-    __unicode__ = lambda x: unicode(x._current_object)
+    __unicode__ = lambda x: str(x._current_object)
     __lt__ = lambda x, o: x._current_object < o
     __le__ = lambda x, o: x._current_object <= o
     __eq__ = lambda x, o: x._current_object == o
@@ -98,7 +98,7 @@ class Proxy(object):
     __invert__ = lambda x: ~(x._current_object)
     __complex__ = lambda x: complex(x._current_object)
     __int__ = lambda x: int(x._current_object)
-    __long__ = lambda x: long(x._current_object)
+    __long__ = lambda x: int(x._current_object)
     __float__ = lambda x: float(x._current_object)
     __oct__ = lambda x: oct(x._current_object)
     __hex__ = lambda x: hex(x._current_object)
